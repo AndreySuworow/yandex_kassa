@@ -61,18 +61,12 @@ open class YandexKassa : ActivityAware, PluginRegistry.ActivityResultListener {
         }
     }
 
-    fun confirm3dsCheckout(paymentParameters: PaymentParameters, confirmationUri: String, resultCallback: TokenizationResultCallback, testParameters: TestParameters, uiParameters: UiParameters) {
+    fun confirm3dsCheckout(confirmationUri: String, resultCallback: TokenizationResultCallback, testParameters: TestParameters, uiParameters: UiParameters) {
         if (!checkBinding(resultCallback)) return
         if (callback == null) {
             callback = resultCallback
             binding?.let {
                 //TODO: check if it is really needed
-                Checkout.createTokenizeIntent(
-                        it.activity,
-                        paymentParameters,
-                        testParameters,
-                        uiParameters
-                )
                 val intent: Intent = Checkout.create3dsIntent(
                         it.activity,
                         confirmationUri
