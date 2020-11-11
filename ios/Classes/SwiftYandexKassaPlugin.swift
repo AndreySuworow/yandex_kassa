@@ -82,24 +82,7 @@ public class SwiftYandexKassaPlugin: NSObject, FlutterPlugin {
                     }
                 } else if (call.method == "confirm3dsCheckout"){
                     vc.confirm3dsCheckout(
-                        confirmationUrl: myArgs["confirmationUrl"] as! String,
-                        clientApplicationKey: clientApplicationKey,
-                        shopName: shopName,
-                        purchaseDescription: purchaseDescription,
-                        gatewayId: myArgs["gatewayId"] as? String,
-                        amount: fetchAmount(amountJson),
-                        tokenizationSettings: fetchTokenizationSettings(
-                            paymentMethodsJson: paymentMethodsJson,
-                            showYandexCheckoutLogo: myArgs["showYandexCheckoutLogo"] as? Bool ?? true
-                        ),
-                        testModeSettings: testSettings,
-                        applePayMerchantIdentifier:  myArgs["applePayMerchantIdentifier"] as? String,
-                        returnUrl: myArgs["returnUrl"] as? String,
-                        isLoggingEnabled: myArgs["isLoggingEnabled"] as? Bool ?? false,
-                        userPhoneNumber: myArgs["userPhoneNumber"] as? String,
-                        customizationSettings: customizationSettings,
-                        savePaymentMethod: fetchSavePaymentMethodMode(myArgs["savePaymentMethodMode"] as? String)
-                        )
+                        confirmationUrl: myArgs["confirmationUrl"] as! String,                        )
                     { (_ response: Result<Bool, PaymentProcessError>) in
                         switch response {
                         case .success(_):
@@ -248,57 +231,9 @@ final class RootViewController: UIViewController {
     public func confirm3dsCheckout(
         /// Confirmation ulr from made payment data
         confirmationUrl: String,
-        /// Client application key.
-        clientApplicationKey: String,
-        /// Name of shop.
-        shopName: String,
-        /// Purchase description.
-        purchaseDescription: String,
-        /// Gateway ID. Setup, is provided at check in Yandex Checkout.
-        /// The cashier at the division of payment flows within a single account.
-        gatewayId: String?,
-        /// Amount of payment.
-        amount: Amount,
-        /// Tokenization settings.
-        tokenizationSettings: TokenizationSettings,
-        /// Test mode settings.
-        testModeSettings: TestModeSettings?,
-        /// Apple Pay merchant ID.
-        applePayMerchantIdentifier: String?,
-        /// Return url for close 3ds.
-        returnUrl: String?,
-        /// Enable logging
-        isLoggingEnabled: Bool,
-        /// User phone number.
-        /// Example: +X XXX XXX XX XX
-        userPhoneNumber: String?,
-        /// Settings to customize SDK interface.
-        customizationSettings: CustomizationSettings,
-        /// Setting for saving payment method.
-        savePaymentMethod: YandexCheckoutPayments.SavePaymentMethod,
         completionHandler: @escaping Confirmation3dsCompletionHandler
     ) {
         on3dsConfirmationCompletionHandler = completionHandler
-        let inputData: TokenizationFlow = .tokenization(TokenizationModuleInputData(
-            clientApplicationKey: clientApplicationKey,
-            shopName: shopName,
-            purchaseDescription: purchaseDescription,
-            amount: amount,
-            gatewayId: gatewayId,
-            tokenizationSettings: tokenizationSettings,
-            testModeSettings: testModeSettings,
-            applePayMerchantIdentifier: applePayMerchantIdentifier,
-            returnUrl: returnUrl,
-            isLoggingEnabled: isLoggingEnabled,
-            userPhoneNumber: userPhoneNumber,
-            customizationSettings: customizationSettings,
-            savePaymentMethod:savePaymentMethod
-        ))
-        
-        let viewController = TokenizationAssembly.makeModule(
-            inputData: inputData,
-            moduleOutput: self
-        )
         viewController.start3dsProcess(requestUrl: confirmationUrl)
     }
     
