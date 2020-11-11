@@ -82,8 +82,7 @@ public class YandexKassaPlugin : FlutterPlugin, MethodCallHandler, YandexKassa()
 
                 if (call.method == "confirm3dsCheckout") {
                     val confirmationUrl = call.argument<String>("confirmationUrl")
-                    confirm3dsCheckout(paymentParameters, confirmationUrl!!, fetchTokenizationResultHandler(result), fetchTestParameters(androidTestModeSettings), fetchUiParameters(showYandexCheckoutLogo
-                            ?: true, androidColorScheme))
+                    confirm3dsCheckout(confirmationUrl!!, fetchTokenizationResultHandler(result))
                 } else {
                     if (call.method == "startCheckout") {
                         startCheckout(paymentParameters, fetchTokenizationResultHandler(result), fetchTestParameters(androidTestModeSettings), fetchUiParameters(showYandexCheckoutLogo
