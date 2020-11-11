@@ -21,11 +21,9 @@ class YandexKassa {
               (paymentParameters.json ?? {})
                 ..addAll({"paymentId": paymentId})));
 
-  static Future<dynamic> confirm3dsCheckout(
-          PaymentParameters paymentParameters, Uri confirmationUrl) async =>
+  static Future<dynamic> confirm3dsCheckout(Uri confirmationUrl) async =>
       TokenizationResult.fromJson(
           await _channel.invokeMapMethod<String, dynamic>(
               'confirm3dsCheckout',
-              (paymentParameters.json ?? {})
-                ..addAll({"confirmationUrl": confirmationUrl.toString()})));
+              ({"confirmationUrl": confirmationUrl.toString()})));
 }
