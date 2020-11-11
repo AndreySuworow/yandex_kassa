@@ -61,7 +61,7 @@ open class YandexKassa : ActivityAware, PluginRegistry.ActivityResultListener {
         }
     }
 
-    fun confirm3dsCheckout(confirmationUri: String, resultCallback: TokenizationResultCallback, testParameters: TestParameters, uiParameters: UiParameters) {
+    fun confirm3dsCheckout(confirmationUri: String, resultCallback: TokenizationResultCallback) {
         if (!checkBinding(resultCallback)) return
         if (callback == null) {
             callback = resultCallback
